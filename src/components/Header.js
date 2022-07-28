@@ -48,6 +48,7 @@ const NavBar = tw.nav`
   px-10
   h-[72px]
   md:px-12
+  bg-slate-600
 `;
 
 const BrandText = tw.h1`

@@ -1,9 +1,12 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import tw from 'tailwind-styled-components/dist/tailwind';
+import { useRouter } from 'next/dist/client/router';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
 
-export default function Home({ products }) {
-  const imgValue = 3; // value to control the number of images to be displayed
+export default function Home({ imgProducts, products }) {
+  const router = useRouter();
 
   return (
     <>
@@ -13,43 +16,57 @@ export default function Home({ products }) {
       <HeroSection>
         <Tagline>Shop for the best products here!</Tagline>
       </HeroSection>
-      <ImagesButtonContainer>
+
+      <ImagesButtonSection>
         <ImagesContainer>
-          <div>
-            <Image
-              src={"https://via.placeholder.com/150.png"}
-              width={150}
-              height={150}
-            />
-          </div>
-          <div>
-            <Image
-              src={"https://via.placeholder.com/150.png"}
-              width={150}
-              height={150}
-            />
-          </div>
-          <div>
-            <Image
-              src={"https://via.placeholder.com/150.png"}
-              width={150}
-              height={150}
-            />
-          </div>
+          {
+            imgProducts?.map((product) => (
+              <img src={product?.image} alt={product?.title} key={product?.id} className="h-[250px] w-[250px] rounded-sm" />
+            ))
+          }
         </ImagesContainer>
-        <ShopNowBtn>
+        <ShopNowBtn onClick={() => router.push('/shop')}>
           Shop Now
         </ShopNowBtn>
-      </ImagesButtonContainer>
+      </ImagesButtonSection>
+
+      <FeaturedProductsSection>
+        <FeaturedProductText>Featured Products</FeaturedProductText>
+        <Carousel
+          autoPlay
+          infiniteLoop
+          showStatus={false}
+          showIndicators={false}
+          showThumbs={false}
+          interval={4000}
+        >
+          {
+            products?.map((product) => (
+              <div key={product?.id}>
+                <img src={product?.image} alt={product?.title} className="h-[150px] w-[50%]"/>
+                <span className="legend">{product?.title}</span>
+              </div>
+            ))
+          }
+        </Carousel>
+      </FeaturedProductsSection>
+
+      <NewsLetterSection>
+
+      </NewsLetterSection>
     </>
   )
 }
 
 export async function getServerSideProps() {
+  const imgValue = 3;
+  const imgProducts = await fetch(`https://fakestoreapi.com/products?limit=${imgValue}`).then((res) => res.json());
+  const products = await fetch("https://fakestoreapi.com/products").then((res) => res.json());
 
   return {
     props: {
-
+      imgProducts,
+      products
     }
   }
 }
@@ -72,25 +89,27 @@ const Tagline = tw.h3`
   my-28
 `;
 
-const ImagesButtonContainer = tw.div`
+const ImagesButtonSection = tw.section`
   container
   flex
   flex-col
   items-center
   justify-center
   mx-auto
-  space-y-4
-  py-6
+  space-y-10
+  py-8
 `;
 
 const ImagesContainer = tw.div`
   container
   flex
-  flex-row
+  flex-col
+  space-y-2
+  md:flex-row
   items-center
   justify-center
   mx-auto
-  space-x-6
+  md:space-x-6
 `;
 
 const ShopNowBtn = tw.button`
@@ -99,8 +118,33 @@ text-white
 rounded-sm
 space-x-2
 px-12
-py-2
+py-3
 tracking-wide
 hover:bg-white
 hover:text-black transition duration-200
+`;
+
+const FeaturedProductsSection = tw.section`
+  flex
+  flex-col
+  items-center
+  mx-auto
+  space-y-2
+`;
+
+const  FeaturedProductText = tw.h2`
+  font-bold
+  text-2xl
+    md:text-5xl
+`;
+
+const NewsLetterSection = tw.section`
+  container
+  flex
+  flex-col
+  items-center
+  mx-auto
+  px-24
+  md:flex-row
+  md:space-x-6
 `;
