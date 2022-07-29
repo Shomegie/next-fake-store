@@ -25,7 +25,7 @@ const Header = () => {
             ))
           }
           <CartBtn>
-            <ShoppingCartIcon className="h-4"/>
+            <ShoppingCartIcon className="h-4 self-center"/>
             <span>Your Cart</span>
             {/* <span className="badge">99+</span> */}
           </CartBtn>
@@ -56,6 +56,7 @@ const BrandText = tw.h1`
   text-lg
   uppercase
   tracking-wide
+  text-blue-500
 `;
 
 const LinkContainer = tw.div`
@@ -68,12 +69,10 @@ const CartBtn = tw.button`
   bg-blue-500
   text-white
   rounded-sm
-  flex
-  items-center
   inline-flex
-  space-x-2
-  px-6
-  py-2
+  items-baseline
+  space-x-1
+  p-3
   tracking-wide
   hover:bg-blue-600 transition duration-200
 `;

@@ -55,4 +55,5 @@ const BrandText = tw.h1`
   text-lg
   uppercase
   tracking-wide
+  text-blue-500
 `;
