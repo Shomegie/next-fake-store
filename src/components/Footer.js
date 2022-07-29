@@ -40,7 +40,7 @@ const FooterContainer = tw.footer`
 `;
 
 const LinkContainer = tw.div`
-  md:flex items-center space-x-6
+  xl:flex items-center space-x-6
   tracking-wide
 `;
 

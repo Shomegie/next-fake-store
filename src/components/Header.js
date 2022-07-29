@@ -47,8 +47,8 @@ const NavBar = tw.nav`
   justify-between
   px-10
   h-[72px]
-  md:px-12
-  bg-slate-600
+  xl:px-12
+  bg-slate-200
 `;
 
 const BrandText = tw.h1`
@@ -60,7 +60,7 @@ const BrandText = tw.h1`
 
 const LinkContainer = tw.div`
   hidden
-  md:flex items-center space-x-6
+  xl:flex items-center space-x-6
   tracking-wide
 `;
 
@@ -75,6 +75,5 @@ const CartBtn = tw.button`
   px-6
   py-2
   tracking-wide
-  hover:bg-white
-  hover:text-black transition duration-200
+  hover:bg-blue-600 transition duration-200
 `;
